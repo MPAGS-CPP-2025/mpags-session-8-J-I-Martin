@@ -5,25 +5,38 @@
 #include <vector>
 
 /**
- * \file ProcessCommandLine.hpp
- * \brief Contains the declaration of the function for processing the command-line arguments
+ * \brief ProgramSettings combines the user input information for processing.
+ * 
+ * It contains all data, including help and version flags, filenames, cipher key,
+ * and mode of operation.
+ * 
+ * Use it like
+ * \code{.cpp}
+ * ProgramSettings settings;
+ * \endcode
+ * 
+ * \since 0.1.0
  */
+struct ProgramSettings {
+    bool helpRequested = false;       /// if we should print help message
+    bool versionRequested = false;    /// if we should print version
+    std::string inputFile = "";       /// the input file path to read from
+    std::string outputFile = "";      /// the output file path to write to
+    std::string cipherKey =
+        "";                 /// the cipher key (numeric character in string)
+    bool encrypt = true;    /// mode of operation
+};
 
 /**
- * \brief Processes the command-line arguments and modifies accordingly the program settings
- *
- * \param cmdLineArgs The command-line arguments to be processed
- * \param helpRequested Indicates the presence of the help flag in the arguments
- * \param versionRequested Indicates the presence of the version flag in the arguments
- * \param inputFile Name of the input file
- * \param outputFile Name of the output file
- * \param cipherKey Key to be used in encrypting/decrypting routine
- * \param encrypt Flag indicating the mode in which the cipher should run (encrypt = true, decrypt = false)
- * \return true if the arguments could be successfully parsed, false otherwise
+ * \brief Process the command line arguments
+ * 
+ * \param cmdLineArgs The user input string
+ * \param settings The ProgramSettings struct to write the args into
+ * 
+ * \return true or false depending on if parsed successfully or errored
  */
+
 bool processCommandLine(const std::vector<std::string>& cmdLineArgs,
-                        bool& helpRequested, bool& versionRequested,
-                        std::string& inputFile, std::string& outputFile,
-                        std::string& cipherKey, bool& encrypt);
+                        ProgramSettings& settings);
 
 #endif    // MPAGSCIPHER_PROCESSCOMMANDLINE_HPP
